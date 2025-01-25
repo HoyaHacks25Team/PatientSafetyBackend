@@ -6,17 +6,25 @@ blueprint = Blueprint('confliction_warnings', __name__)
 @blueprint.route('/check', methods=['POST'])
 def check_interaction():
     """
-    Endpoint to check for interactions between two drugs.
+    Endpoint to check for interactions between one drug and a list of drugs.
     """
     data = request.get_json()
     drug1 = data.get("drug1")
-    drug2 = data.get("drug2")
+    drugs_list = data.get("drugs_list")
 
-    if not drug1 or not drug2:
-        return jsonify({"error": "Both drug1 and drug2 are required"}), 400
+    if not drug1 or not drugs_list:
+        return jsonify({"error": "Both drug1 and a list of drugs are required"}), 400
 
-    interactions = get_adverse_events(drug1, drug2)
-    if "error" in interactions:
-        return jsonify({"error": interactions["error"]}), 500
+    all_interactions = {}
 
-    return jsonify({"drug1": drug1, "drug2": drug2, "interactions": interactions}), 200
+    for drug in drugs_list:
+        interactions = get_adverse_events(drug1, drug)
+        if "error" not in interactions:
+            all_interactions[drug] = interactions
+        else:
+            all_interactions[drug] = []
+
+    return jsonify({"drug1": drug1, "interactions": all_interactions}), 200
+
+
+
