@@ -8,7 +8,7 @@ blueprint = Blueprint('model', __name__)
 
 model = Model()
 
-@blueprint.route("/predict", methods=["POST"])
+@blueprint.route("/apply", methods=["POST"])
 def predict():
     '''
         Endpoint for handling prediction requests
