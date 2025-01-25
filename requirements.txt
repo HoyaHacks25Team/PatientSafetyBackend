@@ -5,6 +5,6 @@ git+https://github.com/idoshr/flask-mongoengine.git@e244408acf440c4208f7ddcd6e5d
 Flask-PyMongo==2.3.0
 Flask-WTF==1.2.1
 requests==2.31.0
-openai==1.60.1
+openai==0.28.0
 python-dotenv==1.0.0
 gunicorn==21.2.0
