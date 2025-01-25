@@ -24,6 +24,10 @@ def ask_bot():
     if not isinstance(conversation, list):
         return jsonify({"error": "Conversation must be a list"}), 400
     
+    # Validate medications structure
+    if medications and not all(isinstance(med, dict) for med in medications):
+        return jsonify({"error": "Each medication must be a dictionary"}), 400
+    
     # Example logging for debugging
     print(f"Received medications: {medications}")
     print(f"User message: {user_message}")
@@ -32,14 +36,23 @@ def ask_bot():
     # Developer instructions for OpenAI
     developer_message = (
         "You are a healthcare assistant. Provide accurate and helpful responses "
-        "related to medications. Keep your responses concise and clear. You may structure your "
-        "answers as a list of short messages, resembling a text message conversation."
+        "related to medications. Keep your responses concise and clear. "
+        "Use the provided medication details to offer specific advice."
     )
+
+    # Include medication details in OpenAI messages
+    medication_details = "\n".join(
+        f"- {med['name']} ({med['dosage']}, {med['frequency']}, {med['timeOfDay']}): {med['instructions']}"
+        for med in medications
+    )
+
+    # Add medications to the context
+    medications_context = f"The user is taking the following medications:\n{medication_details}"
 
     # Format the messages for the OpenAI API
     messages = format_openai_messages(
         developer_message=developer_message, 
-        medications=medications, 
+        medications_context=medications_context, 
         conversation=conversation, 
         user_message=user_message
     )
