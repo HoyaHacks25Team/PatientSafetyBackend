@@ -47,12 +47,12 @@ def ask_bot():
     )
 
     # Add medications to the context
-    medications_context = f"The user is taking the following medications:\n{medication_details}"
+    medications = medication_details
 
     # Format the messages for the OpenAI API
     messages = format_openai_messages(
         developer_message=developer_message, 
-        medications_context=medications_context, 
+        medications=medications, 
         conversation=conversation, 
         user_message=user_message
     )

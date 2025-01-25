@@ -23,7 +23,7 @@ def format_openai_messages(developer_message, medications, conversation, user_me
     # Base developer message
     messages = [
         {"role": "developer", "content": developer_message},
-        {"role": "developer", "content": f"The patient is currently taking the following medications: {', '.join(medications)}."}
+        {"role": "developer", "content": f"The patient is currently taking the following medications: {medications}."}
     ]
 
     # Add conversation history
