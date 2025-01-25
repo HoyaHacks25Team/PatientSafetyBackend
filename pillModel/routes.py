@@ -31,4 +31,8 @@ def predict():
     except Exception as e:
         return jsonify({"error": f"Error during prediction: {str(e)}"}), 500
 
-    
+
+@blueprint.route("/test", methods=["GET"])
+def test():
+    # test endpoint to see if routes are working. ping method
+    return jsonify({"message": "Model routes are working."}), 200
