@@ -39,11 +39,11 @@ class Model:
             # Make the prediction
             predictions = self.model.predict(img)
             predicted_index = np.argmax(predictions)  # Get the index of the highest probability
-            predicted_label = self.class_labels[predicted_index]
+            predicted_label = self.class_labels[predicted_index-1]
             confidence = float(np.max(predictions))  # Confidence score
 
             return {
-                "predicted_label": (predicted_label-1),
+                "predicted_label": (predicted_label),
                 "confidence": confidence
             }
         except Exception as e:
